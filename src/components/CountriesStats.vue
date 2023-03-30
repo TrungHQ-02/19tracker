@@ -77,11 +77,17 @@
       </template>
 
       <span slot="action" slot-scope="text, record">
-        <a-button type="primary" @click="showModal"> Details </a-button>
-        <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+        <a-button type="primary" @click="showModal(record)"> Details </a-button>
+        <a-modal
+          v-model="visible"
+          title="Specific statistics"
+          @ok="handleOk"
+          :footer="null"
+        >
+          <canvas ref="myChart"></canvas>
+          <a-button type="primary" @click="downloadExcel"
+            >Download Excel</a-button
+          >
         </a-modal>
       </span>
     </a-table>
@@ -107,13 +113,14 @@ export default {
   data() {
     return {
       visible: false,
+      modalRecord: null,
       country_name: "",
       searchText: "",
       searchInput: null,
       searchedColumn: "",
       columns: [
         {
-          title: "Country name",
+          title: "Name",
           dataIndex: "country_name",
           key: "country_name",
           scopedSlots: {
@@ -133,6 +140,7 @@ export default {
               }, 0);
             }
           },
+          ellipsis: true,
         },
         {
           title: "Cases",
@@ -141,59 +149,57 @@ export default {
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "deaths",
+          title: "Deaths",
           dataIndex: "deaths",
           key: "deaths",
           sorter: (a, b) => compare(a.deaths, b.deaths),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "total_recovered",
+          title: "Recovered",
           dataIndex: "total_recovered",
           key: "total_recovered",
           sorter: (a, b) => compare(a.total_recovered, b.total_recovered),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "new_deaths",
+          title: "New deaths",
           dataIndex: "new_deaths",
           key: "new_deaths",
           sorter: (a, b) => compare(a.new_deaths, b.new_deaths),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "new_cases",
+          title: "New cases",
           dataIndex: "new_cases",
           key: "new_cases",
           sorter: (a, b) => compare(a.new_cases, b.new_cases),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "serious_critical",
+          title: "Critical",
           dataIndex: "serious_critical",
           key: "serious_critical",
           sorter: (a, b) => compare(a.serious_critical, b.serious_critical),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "active_cases",
+          title: "Active",
           dataIndex: "active_cases",
           key: "active_cases",
           sorter: (a, b) => compare(a.active_cases, b.active_cases),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "total_tests",
+          title: "Tests",
           dataIndex: "total_tests",
           key: "total_tests",
           sorter: (a, b) => compare(a.total_tests, b.total_tests),
           sortDirections: ["descend", "ascend"],
-          width: 150,
         },
         {
           title: "Actions",
           key: "action",
-          width: 80,
           scopedSlots: { customRender: "action" },
         },
       ],
@@ -202,18 +208,10 @@ export default {
 
   computed: {
     ...mapGetters(["countriesStatistics"]),
-    arrayOfSpecificCountry: function () {
-      let arr = [];
-      arr.push(this.worldStatistics);
-      return arr;
-    },
   },
 
   methods: {
     ...mapActions(["fetchCountriesStatistics"]),
-    showStats: function () {
-      console.log(this.countriesStatistics);
-    },
 
     handleSearch(selectedKeys, confirm, dataIndex) {
       confirm();
@@ -226,12 +224,106 @@ export default {
       this.searchText = "";
     },
 
-    showModal() {
+    showModal(record) {
       this.visible = true;
+      this.modalRecord = record;
+      this.renderChart();
     },
     handleOk(e) {
-      console.log(e);
+      this.$refs.myChart.chart.destroy();
       this.visible = false;
+    },
+
+    renderChart() {
+      this.$nextTick(() => {
+        const canvas = this.$refs.myChart;
+        const ctx = canvas.getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: [
+              "Cases",
+              "Deaths",
+              "Recovered",
+              "New Cases",
+              "New Deaths",
+              "Critical",
+              "Active",
+              "Total per 1M",
+            ],
+            datasets: [
+              {
+                label: "WorldStats",
+                data: [
+                  convertToNumber(this.modalRecord.cases),
+                  convertToNumber(this.modalRecord.deaths),
+                  convertToNumber(this.modalRecord.total_recovered),
+                  convertToNumber(this.modalRecord.new_cases),
+                  convertToNumber(this.modalRecord.new_deaths),
+                  convertToNumber(this.modalRecord.serious_critical),
+                  convertToNumber(this.modalRecord.active_cases),
+                  convertToNumber(
+                    this.modalRecord.total_cases_per_1m_population
+                  ),
+                ],
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                  "rgba(231, 233, 237, 0.7)",
+                  "rgba(153, 102, 255, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(231, 233, 237, 1)",
+                  "rgba(153, 102, 255, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                    callback: function (value) {
+                      return value
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    },
+                  },
+                },
+              ],
+            },
+            legend: {
+              display: false,
+            },
+          },
+        });
+      });
+    },
+
+    downloadExcel() {
+      console.log("Download excel");
+    },
+  },
+
+  watch: {
+    modalRecord: {
+      handler() {
+        this.renderChart();
+      },
+      deep: true,
     },
   },
 };

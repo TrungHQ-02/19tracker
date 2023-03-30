@@ -76,12 +76,6 @@ export default {
   name: "WorldData",
   computed: {
     ...mapGetters(["worldStatistics"]),
-
-    arrayOfWorld: function () {
-      let arr = [];
-      arr.push(this.worldStatistics);
-      return arr;
-    },
   },
   methods: {
     ...mapActions(["fetchWorldStatistics"]),
