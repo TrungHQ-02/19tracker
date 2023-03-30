@@ -3,9 +3,7 @@
     <h2>WORLD DATA</h2>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
     <a-button type="primary" style="margin-bottom: 15px">
-      <export-excel :data="arrayOfWorld" name="world.xls">
-        Export world data to excel
-      </export-excel>
+      Export world data to excel
     </a-button>
     <a-row :gutter="16">
       <a-col :span="8">

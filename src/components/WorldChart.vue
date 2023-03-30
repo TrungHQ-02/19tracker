@@ -10,7 +10,7 @@ import Chart from "chart.js";
 import { mapGetters } from "vuex";
 
 function convertToNumber(str) {
-  if (str === "N/A") return -1;
+  if (!str || str === "N/A") return -1;
   str = str.replace(/,/g, "");
   return parseInt(str);
 }

@@ -77,11 +77,12 @@
       </template>
 
       <span slot="action" slot-scope="text, record">
-        <a-button type="primary">
-          <export-excel :data="[record]" name="specificCountry.xls">
-            <a-icon type="file-excel" />
-          </export-excel>
-        </a-button>
+        <a-button type="primary" @click="showModal"> Details </a-button>
+        <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </a-modal>
       </span>
     </a-table>
   </div>
@@ -105,6 +106,7 @@ let compare = (a, b) => {
 export default {
   data() {
     return {
+      visible: false,
       country_name: "",
       searchText: "",
       searchInput: null,
@@ -197,6 +199,7 @@ export default {
       ],
     };
   },
+
   computed: {
     ...mapGetters(["countriesStatistics"]),
     arrayOfSpecificCountry: function () {
@@ -205,11 +208,13 @@ export default {
       return arr;
     },
   },
+
   methods: {
     ...mapActions(["fetchCountriesStatistics"]),
     showStats: function () {
       console.log(this.countriesStatistics);
     },
+
     handleSearch(selectedKeys, confirm, dataIndex) {
       confirm();
       this.searchText = selectedKeys[0];
@@ -219,6 +224,14 @@ export default {
     handleReset(clearFilters) {
       clearFilters();
       this.searchText = "";
+    },
+
+    showModal() {
+      this.visible = true;
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible = false;
     },
   },
 };

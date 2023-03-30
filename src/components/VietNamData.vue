@@ -3,9 +3,7 @@
     <h2>VIET NAM DATA</h2>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
     <a-button type="primary" style="margin-bottom: 15px">
-      <export-excel :data="arrayOfVietNam" name="vietnam.xls">
-        Export VietNam data to excel
-      </export-excel>
+      Export VietNam data to excel
     </a-button>
     <a-row :gutter="16">
       <a-col :span="8">
