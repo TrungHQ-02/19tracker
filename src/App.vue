@@ -13,7 +13,7 @@
             <router-link to="/">World data</router-link>
           </a-menu-item>
           <a-menu-item key="2">
-            <router-link to="/vietnam">Viet Nam</router-link>
+            <router-link to="/vietnam">Vietnam</router-link>
           </a-menu-item>
           <a-menu-item key="3">
             <router-link to="/about">About</router-link>
