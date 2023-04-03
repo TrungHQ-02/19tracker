@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h2 style="margin-top: 50px">Countries Stats</h2>
+  <div style="background-color: aliceblue; margin-top: 12px">
+    <h2 style="font-size: 25px; margin-bottom: 0; padding: 6px 6px">
+      Countries Stats
+    </h2>
     <a-table
       :data-source="countriesStatistics"
       :columns="columns"

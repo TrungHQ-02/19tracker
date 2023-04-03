@@ -1,9 +1,7 @@
 <template>
   <div>
     <WorldData></WorldData>
-    <a-divider />
     <WorldChart></WorldChart>
-    <a-divider />
     <CountriesStats></CountriesStats>
   </div>
 </template>

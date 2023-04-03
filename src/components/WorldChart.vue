@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>World barplot</h2>
+  <div style="background-color: #f0f8ff; padding: 24px">
+    <h2 style="font-size: 25px; padding: 6px 6px">World barplot</h2>
     <canvas ref="chart" responsive="true"></canvas>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
-  <div style="background-color: turquoise; padding: 20px">
-    <h2>WORLD DATA</h2>
+  <div style="padding: 20px">
+    <h1>WORLD DATA</h1>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
     <a-button type="primary" style="margin-bottom: 15px" @click="exportToExcel">
       Export world data to excel
@@ -213,3 +213,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: 40px;
+}
+</style>

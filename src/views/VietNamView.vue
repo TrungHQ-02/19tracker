@@ -1,7 +1,6 @@
 <template>
   <div>
     <VietNamData></VietNamData>
-    <a-divider />
     <VietNamChart></VietNamChart>
   </div>
 </template>

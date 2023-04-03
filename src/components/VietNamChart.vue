@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #f0f8ff; padding: 24px">
     <h2>Vietnam barplot</h2>
     <canvas ref="chart" responsive="true"></canvas>
   </div>
