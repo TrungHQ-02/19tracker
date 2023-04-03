@@ -1,11 +1,11 @@
 <template>
-  <div style="padding: 20px">
+  <div style="padding-bottom: 20px">
     <h1>WORLD DATA</h1>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
     <a-button type="primary" style="margin-bottom: 15px" @click="exportToExcel">
       Export world data to excel
     </a-button>
-    <a-row :gutter="16">
+    <a-row :gutter="20">
       <a-col :span="8">
         <a-card size="small" title="Total Cases" :bordered="false">
           <p>{{ worldStatistics.total_cases }}</p>
@@ -25,7 +25,7 @@
 
     <br />
 
-    <a-row :gutter="16">
+    <a-row :gutter="20">
       <a-col :span="8">
         <a-card size="small" title="New deaths" :bordered="false">
           <p>{{ worldStatistics.new_deaths }}</p>
@@ -44,7 +44,7 @@
     </a-row>
     <br />
 
-    <a-row :gutter="16">
+    <a-row :gutter="20">
       <a-col :span="8">
         <a-card size="small" title="Serious critical" :bordered="false">
           <p>{{ worldStatistics.serious_critical }}</p>

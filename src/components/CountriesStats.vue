@@ -58,6 +58,9 @@
       />
 
       <template slot="customRender" slot-scope="text, record, index, column">
+        <!-- country flag -->
+        <span :class="'fi fi-' + getCountryIsoCode(record.country_name)"></span>
+
         <span v-if="searchText && searchedColumn === column.dataIndex">
           <template
             v-for="(fragment, i) in text
@@ -82,7 +85,7 @@
         <a-button type="primary" @click="showModal(record)"> Details </a-button>
         <a-modal
           v-model="visible"
-          title="Specific statistics"
+          :title="modalTitle"
           @ok="handleOk"
           :footer="null"
         >
@@ -100,6 +103,8 @@
 import { mapGetters, mapActions } from "vuex";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+import flags from "../assets/flag";
 
 function convertToNumber(str) {
   if (str === "N/A") return -1;
@@ -116,6 +121,7 @@ let compare = (a, b) => {
 export default {
   data() {
     return {
+      modalTitle: "",
       visible: false,
       modalRecord: null,
       country_name: "",
@@ -217,6 +223,11 @@ export default {
   methods: {
     ...mapActions(["fetchCountriesStatistics"]),
 
+    getCountryIsoCode(country_name) {
+      console.log(country_name);
+      return flags[country_name].toLowerCase();
+    },
+
     handleSearch(selectedKeys, confirm, dataIndex) {
       confirm();
       this.searchText = selectedKeys[0];
@@ -231,6 +242,7 @@ export default {
     showModal(record) {
       this.visible = true;
       this.modalRecord = record;
+      this.modalTitle = record.country_name;
       this.renderChart();
     },
     handleOk(e) {

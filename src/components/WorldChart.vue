@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #f0f8ff; padding: 24px">
+  <div style="background-color: #f0f8ff; padding: 12px">
     <h2 style="font-size: 25px; padding: 6px 6px">World barplot</h2>
     <canvas ref="chart" responsive="true"></canvas>
   </div>
