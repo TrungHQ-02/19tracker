@@ -224,7 +224,6 @@ export default {
     ...mapActions(["fetchCountriesStatistics"]),
 
     getCountryIsoCode(country_name) {
-      console.log(country_name);
       return flags[country_name].toLowerCase();
     },
 
@@ -336,7 +335,6 @@ export default {
 
       worksheet.mergeCells("A1:I3");
       const titleCell = worksheet.getCell("A1");
-      console.log(this.modalRecord);
       titleCell.value = this.modalRecord.country_name + " Report";
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       titleCell.font = {

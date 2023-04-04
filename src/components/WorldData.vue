@@ -84,7 +84,7 @@ function convertToNumber(str) {
 export default {
   name: "WorldData",
   computed: {
-    ...mapGetters(["worldStatistics"]),
+    ...mapGetters(["worldStatistics", "worldChartImage"]),
   },
   methods: {
     ...mapActions(["fetchWorldStatistics"]),
@@ -198,6 +198,12 @@ export default {
         column.width = maxLength + 2; // add some padding to the width
       }
 
+      console.log(this.worldChartImage);
+      const imageId = workbook.addImage({
+        base64: this.worldChartImage,
+        extension: "png",
+      });
+      worksheet.addImage(imageId, "A12:I30");
       // export file
       const timeStamp = this.worldStatistics.statistic_taken_at;
       workbook.xlsx.writeBuffer().then((buffer) => {

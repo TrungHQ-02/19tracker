@@ -7,7 +7,10 @@ const getters = {
   },
   vietNamStatistics (state) {
     return state.vietNamStatistics
-  }
+  },
+  worldChartImage: state => state.worldChartImage,
+  vietnamChartImage: state => state.vietnamChartImage,
+  countryChartImage: state => state.countryChartImage
 }
 
 export default getters

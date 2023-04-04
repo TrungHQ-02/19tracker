@@ -8,7 +8,7 @@
 
 <script>
 import Chart from "chart.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import html2canvas from "html2canvas";
 
 function convertToNumber(str) {
@@ -23,17 +23,19 @@ export default {
     this.renderChart();
   },
   computed: {
-    ...mapGetters(["worldStatistics"]),
+    ...mapGetters(["worldStatistics", "worldChartImage"]),
   },
   watch: {
     worldStatistics: {
-      handler() {
+      async handler() {
+        console.log("Bắt được thay đổi");
         this.renderChart();
+        this.captureChart();
       },
-      deep: true,
     },
   },
   methods: {
+    ...mapActions(["updateWorldChartImage"]),
     renderChart() {
       const ctx = this.$refs.chart.getContext("2d");
       new Chart(ctx, {
@@ -98,11 +100,9 @@ export default {
 
     captureChart() {
       const chart = this.$refs.chart;
+      console.log("chart được cap");
       html2canvas(chart).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "world_barplot.png";
-        link.href = canvas.toDataURL();
-        link.click();
+        this.updateWorldChartImage(canvas.toDataURL());
       });
     },
   },

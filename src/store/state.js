@@ -1,7 +1,10 @@
 const state = {
   worldStatistics: {},
   countriesStatistics: [],
-  vietNamStatistics: {}
+  vietNamStatistics: {},
+  worldChartImage: '',
+  vietnamChartImage: '',
+  countryChartImage: '',
  }
  
  export default state

@@ -27,7 +27,18 @@ const actions = {
     } catch (error) {
       console.error(error)
     }
+  },
+  updateWorldChartImage({ commit }, image) {
+    commit('setWorldChartImage', image);
+  },
+  updateVietnamChartImage({ commit }, image) {
+    commit('setVietnamChartImage', image);
+  },
+  updateCountryChartImage({ commit }, image) {
+    commit('setCountryChartImage', image);
   }
+
+  
 }
 
 export default actions

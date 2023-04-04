@@ -7,7 +7,16 @@ const mutations = {
    },
    setVietNamStatistics (state, vietNamStatistics) {
     state.vietNamStatistics = vietNamStatistics
-   }
+   },
+   setWorldChartImage(state, image) {
+    state.worldChartImage = image;
+  },
+  setVietnamChartImage(state, image) {
+    state.vietnamChartImage = image;
+  },
+  setCountryChartImage(state, image) {
+    state.countryChartImage = image;
+  }
  }
  
  export default mutations
