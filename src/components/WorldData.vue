@@ -2,7 +2,7 @@
   <div style="padding-bottom: 20px">
     <h1>WORLD DATA</h1>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
-    <a-button type="primary" style="margin-bottom: 15px" @click="exportToExcel">
+    <a-button type="primary" style="margin-bottom: 15px" @click="handleClick">
       Export world data to excel
     </a-button>
     <a-row :gutter="20">
@@ -73,6 +73,7 @@ import "ant-design-vue/dist/antd.css";
 import { mapGetters, mapActions } from "vuex";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import EventBus from "@/event-bus/event-bus";
 
 function convertToNumber(str) {
   if (!str) return 0;
@@ -88,10 +89,25 @@ export default {
   },
   methods: {
     ...mapActions(["fetchWorldStatistics"]),
+    async handleClick() {
+      EventBus.$emit("capture-chart");
+      await this.waitForWorldChartImage();
+      this.exportToExcel();
+    },
+    waitForWorldChartImage() {
+      return new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+          if (this.$store.state.worldChartImage) {
+            clearInterval(intervalId);
+            resolve();
+          }
+        }, 100);
+      });
+    },
     exportToExcel() {
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet("My Sheet");
+      const worksheet = workbook.addWorksheet("Global Sheet");
 
       worksheet.mergeCells("A1:I3");
       const titleCell = worksheet.getCell("A1");
@@ -117,7 +133,7 @@ export default {
         "This data was taken at " +
         this.worldStatistics.statistic_taken_at +
         " and downloaded at " +
-        ` ${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        `${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
       timeStampCell.alignment = { vertical: "middle", horizontal: "center" };
       timeStampCell.font = {
         name: "Arial",
@@ -198,12 +214,23 @@ export default {
         column.width = maxLength + 2; // add some padding to the width
       }
 
+      worksheet.mergeCells("B12:H13");
+      let chartCell = worksheet.getCell("B12");
+      chartCell.value =
+        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+      chartCell.font = {
+        name: "Times New Roman",
+        family: 1,
+        size: 14,
+      };
+      chartCell.alignment = { vertical: "middle", horizontal: "center" };
+
       console.log(this.worldChartImage);
       const imageId = workbook.addImage({
         base64: this.worldChartImage,
         extension: "png",
       });
-      worksheet.addImage(imageId, "A12:I30");
+      worksheet.addImage(imageId, "B14:H30");
       // export file
       const timeStamp = this.worldStatistics.statistic_taken_at;
       workbook.xlsx.writeBuffer().then((buffer) => {

@@ -10,6 +10,7 @@
 import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import html2canvas from "html2canvas";
+import EventBus from "../event-bus/event-bus";
 
 function convertToNumber(str) {
   if (!str) return 0;
@@ -21,6 +22,9 @@ function convertToNumber(str) {
 export default {
   mounted() {
     this.renderChart();
+    EventBus.$on("capture-chart", () => {
+      this.captureChart();
+    });
   },
   computed: {
     ...mapGetters(["worldStatistics", "worldChartImage"]),
@@ -30,13 +34,12 @@ export default {
       async handler() {
         console.log("Bắt được thay đổi");
         this.renderChart();
-        this.captureChart();
       },
     },
   },
   methods: {
     ...mapActions(["updateWorldChartImage"]),
-    renderChart() {
+    async renderChart() {
       const ctx = this.$refs.chart.getContext("2d");
       new Chart(ctx, {
         type: "bar",
