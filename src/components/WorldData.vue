@@ -97,7 +97,7 @@ export default {
     waitForWorldChartImage() {
       return new Promise((resolve) => {
         const intervalId = setInterval(() => {
-          if (this.$store.state.worldChartImage) {
+          if (this.worldChartImage) {
             clearInterval(intervalId);
             resolve();
           }
