@@ -84,7 +84,11 @@ function convertToNumber(str) {
 export default {
   name: "VietNamData",
   computed: {
-    ...mapGetters(["vietNamStatistics", "worldStatistics"]),
+    ...mapGetters([
+      "vietNamStatistics",
+      "worldStatistics",
+      "vietnamChartImage",
+    ]),
   },
   methods: {
     downloadExcel() {
@@ -197,6 +201,24 @@ export default {
 
         column.width = maxLength + 2; // add some padding to the width
       }
+
+      worksheet.mergeCells("B12:H13");
+      let chartCell = worksheet.getCell("B12");
+      chartCell.value =
+        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+      chartCell.font = {
+        name: "Times New Roman",
+        family: 1,
+        size: 14,
+      };
+      chartCell.alignment = { vertical: "middle", horizontal: "center" };
+
+      console.log(this.vietnamChartImage);
+      const imageId = workbook.addImage({
+        base64: this.vietnamChartImage,
+        extension: "png",
+      });
+      worksheet.addImage(imageId, "B14:H30");
 
       // export file
       const timeStamp = this.worldStatistics.statistic_taken_at;

@@ -1,13 +1,15 @@
 <template>
   <div style="background-color: #f0f8ff; padding: 12px">
     <h2>Vietnam barplot</h2>
-    <canvas ref="chart" responsive="true"></canvas>
+    <canvas ref="vnchart" responsive="true"></canvas>
+    <button @click="captureVietNamChart">Capture ảnh đưa vào state</button>
   </div>
 </template>
 
 <script>
 import Chart from "chart.js";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import html2canvas from "html2canvas";
 
 function convertToNumber(str) {
   if (str === "N/A") return -1;
@@ -31,8 +33,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["updateVietnamChartImage"]),
     renderChart() {
-      const ctx = this.$refs.chart.getContext("2d");
+      const ctx = this.$refs.vnchart.getContext("2d");
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -105,6 +108,16 @@ export default {
           },
         },
       });
+    },
+
+    captureVietNamChart() {
+      const chart = this.$refs.vnchart;
+      console.log("chart được cap");
+      html2canvas(chart).then((canvas) => {
+        this.updateVietnamChartImage(canvas.toDataURL());
+      });
+
+      console.log("Da luu anh vao state");
     },
   },
 };
