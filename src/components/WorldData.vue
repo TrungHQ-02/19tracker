@@ -1,15 +1,19 @@
 <template>
   <div style="padding-bottom: 20px">
-    <h1>WORLD DATA</h1>
-    <h3>Last updated at: <br />{{ worldStatistics.statistic_taken_at }}</h3>
+    <h1>{{ $t("worldData.worldData") }}</h1>
+    <h3>
+      {{ $t("worldData.lastUpdatedAt") }} <br />{{
+        worldStatistics.statistic_taken_at
+      }}
+    </h3>
     <a-button type="primary" style="margin-bottom: 15px" @click="handleClick">
-      Export world report
+      {{ $t("worldData.exportReport") }}
     </a-button>
     <a-row :gutter="20">
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total Cases"
+          :title="$t('worldData.totalCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -19,7 +23,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="New cases"
+          :title="$t('worldData.newCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -29,7 +33,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total deaths"
+          :title="$t('worldData.totalDeaths')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -42,7 +46,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="New deaths"
+          :title="$t('worldData.newDeaths')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -52,7 +56,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total recovered"
+          :title="$t('worldData.totalRecovered')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -62,7 +66,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Active cases"
+          :title="$t('worldData.activeCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -74,7 +78,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Serious critical"
+          :title="$t('worldData.seriousCritical')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -84,7 +88,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total cases per one milion"
+          :title="$t('worldData.totalCasesPerMillion')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -94,7 +98,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Death per one milion"
+          :title="$t('worldData.deathsPerMillion')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -144,11 +148,13 @@ export default {
     exportToExcel() {
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet("Global Sheet");
+      const worksheet = workbook.addWorksheet(
+        this.$t("worldData.sheetExport.sheetTitle")
+      );
 
       worksheet.mergeCells("A1:I3");
       const titleCell = worksheet.getCell("A1");
-      titleCell.value = "Global Report";
+      titleCell.value = this.$t("worldData.sheetExport.titleCell");
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       titleCell.font = {
         name: "Arial Black",
@@ -167,9 +173,9 @@ export default {
       worksheet.mergeCells("A4:I5");
       let timeStampCell = worksheet.getCell("A4");
       timeStampCell.value =
-        "This data was taken at " +
+        this.$t("worldData.sheetExport.script1") +
         this.worldStatistics.statistic_taken_at +
-        " and downloaded at " +
+        this.$t("worldData.sheetExport.script2") +
         `${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
       timeStampCell.alignment = { vertical: "middle", horizontal: "center" };
       timeStampCell.font = {
@@ -180,8 +186,7 @@ export default {
 
       worksheet.mergeCells("A6:I9");
       let desCell = worksheet.getCell("A6");
-      desCell.value =
-        "This table contains the following information related to COVID-19: Active Cases, Deaths per 1M Population, New Cases, New Deaths, Serious Critical cases, Total Cases, Total Cases per 1M Population, Total Deaths, and Total Recovered cases. The data in the table is updated regularly to provide accurate information on the global situation of the pandemic. This information can be used to analyze trends and make informed decisions related to travel, social distancing, and other measures to prevent the spread of COVID-19. By understanding the data in this table, individuals and organizations can take necessary precautions to protect themselves and others from the virus.";
+      desCell.value = this.$t("worldData.sheetExport.desCell");
       desCell.font = {
         name: "Times New Roman",
         family: 1,
@@ -200,15 +205,25 @@ export default {
           showColumnStripes: true,
         },
         columns: [
-          { name: "Active Cases" },
-          { name: "Deaths per 1M Population" },
-          { name: "New Cases" },
-          { name: "New Deaths" },
-          { name: "Serious Critical" },
-          { name: "Total Cases" },
-          { name: "Total Cases per 1M Population" },
-          { name: "Total Deaths" },
-          { name: "Total Recovered" },
+          { name: this.$t("worldData.sheetExport.tableColumns.activeCases") },
+          {
+            name: this.$t(
+              "worldData.sheetExport.tableColumns.totalDeathsPer1M"
+            ),
+          },
+          { name: this.$t("worldData.sheetExport.tableColumns.newCases") },
+          { name: this.$t("worldData.sheetExport.tableColumns.newDeaths") },
+          {
+            name: this.$t("worldData.sheetExport.tableColumns.seriousCritical"),
+          },
+          { name: this.$t("worldData.sheetExport.tableColumns.totalCases") },
+          {
+            name: this.$t("worldData.sheetExport.tableColumns.totalCasesPer1M"),
+          },
+          { name: this.$t("worldData.sheetExport.tableColumns.totalDeaths") },
+          {
+            name: this.$t("worldData.sheetExport.tableColumns.totalRecovered"),
+          },
         ],
         rows: [
           [
@@ -253,8 +268,8 @@ export default {
 
       worksheet.mergeCells("B12:H13");
       let chartCell = worksheet.getCell("B12");
-      chartCell.value =
-        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+      chartCell.value = this.$t("worldData.sheetExport.chartCell");
+
       chartCell.font = {
         name: "Times New Roman",
         family: 1,

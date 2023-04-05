@@ -1,0 +1,63 @@
+{
+   "vietnamChart": 
+      {
+         "vietnamBarplot": "Vietnam Barplot",
+         "totalCases": "Total Cases",
+         "totalDeaths": "Total Deaths",
+         "totalRecovered": "Total Recovered",
+         "newCases": "New Cases",
+         "newDeaths": "New Deaths",
+         "seriousCritical": "Serious Critical",
+         "activeCases": "Active Cases",
+         "totalCasesPer1M": "Total cases per 1M"
+       }
+       ,
+       "worldChart": 
+       {
+         "worldBarplot": "World Barplot",
+         "totalCases": "Total Cases",
+         "totalDeaths": "Total Deaths",
+         "totalRecovered": "Total Recovered",
+         "newCases": "New Cases",
+         "newDeaths": "New Deaths",
+         "seriousCritical": "Serious Critical",
+         "activeCases": "Active Cases",
+         "totalCasesPer1M": "Total cases per 1M"
+       },
+       "worldData": 
+       {
+         "worldData": "WORLD DATA",
+         "lastUpdatedAt": "Last updated at:",
+         "exportReport": "Export world report",
+         "totalCases": "Total Cases",
+         "newCases": "New cases",
+         "totalDeaths": "Total deaths",
+         "newDeaths": "New deaths",
+         "totalRecovered": "Total recovered",
+         "activeCases": "Active cases",
+         "seriousCritical": "Serious critical",
+         "totalCasesPerMillion": "Total cases per one million",
+         "deathsPerMillion": "Death per one million",
+         "sheetExport": {
+            "sheetTitle": "Global",
+            "titleCell": "Global report",
+            "script1": "This data was taken at ",
+            "script2": " and downloaded at ",
+            "desCell": "This table contains the following information related to COVID-19: Active Cases, Deaths per 1M Population, New Cases, New Deaths, Serious Critical cases, Total Cases, Total Cases per 1M Population, Total Deaths, and Total Recovered cases. The data in the table is updated regularly to provide accurate information on the global situation of the pandemic. This information can be used to analyze trends and make informed decisions related to travel, social distancing, and other measures to prevent the spread of COVID-19. By understanding the data in this table, individuals and organizations can take necessary precautions to protect themselves and others from the virus.",
+            "tableColumns":{
+               "totalDeathsPer1M": "Total deaths per 1M",
+               "totalCases": "Total Cases",
+               "totalDeaths": "Total Deaths",
+               "totalRecovered": "Total Recovered",
+               "newCases": "New Cases",
+               "newDeaths": "New Deaths",
+               "seriousCritical": "Serious Critical",
+               "activeCases": "Active Cases",
+               "totalCasesPer1M": "Total cases per 1M"
+            },
+            "chartCell": "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day."
+         }
+       }
+       
+       
+ }

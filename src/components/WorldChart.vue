@@ -1,6 +1,8 @@
 <template>
   <div style="background-color: #f0f8ff; padding: 12px">
-    <h2 style="font-size: 25px; padding: 6px 6px">World barplot</h2>
+    <h2 style="font-size: 25px; padding: 6px 6px">
+      {{ $t("worldChart.worldBarplot") }}
+    </h2>
     <canvas ref="chart" responsive="true"></canvas>
   </div>
 </template>
@@ -43,11 +45,11 @@ export default {
         type: "bar",
         data: {
           labels: [
-            "Total Cases",
-            "Total Deaths",
-            "Total Recovered",
-            "New Cases",
-            "New Deaths",
+            this.$t("worldChart.totalCases"),
+            this.$t("worldChart.totalDeaths"),
+            this.$t("worldChart.totalRecovered"),
+            this.$t("worldChart.newCases"),
+            this.$t("worldChart.newDeaths"),
           ],
           datasets: [
             {

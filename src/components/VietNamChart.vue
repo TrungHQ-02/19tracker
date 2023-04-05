@@ -1,6 +1,8 @@
 <template>
   <div style="background-color: #f0f8ff; padding: 12px">
-    <h2 style="font-size: 25px; padding: 6px 6px">Vietnam barplot</h2>
+    <h2 style="font-size: 25px; padding: 6px 6px">
+      {{ $t("vietnamChart.vietnamBarplot") }}
+    </h2>
     <canvas ref="chart" responsive="true"></canvas>
   </div>
 </template>
@@ -44,14 +46,14 @@ export default {
         type: "bar",
         data: {
           labels: [
-            "Total Cases",
-            "Total Deaths",
-            "Total Recovered",
-            "New Cases",
-            "New Deaths",
-            "Serious Critical",
-            "Active Cases",
-            "Total cases per 1M",
+            this.$t("vietnamChart.totalCases"),
+            this.$t("vietnamChart.totalDeaths"),
+            this.$t("vietnamChart.totalRecovered"),
+            this.$t("vietnamChart.newCases"),
+            this.$t("vietnamChart.newDeaths"),
+            this.$t("vietnamChart.seriousCritical"),
+            this.$t("vietnamChart.activeCases"),
+            this.$t("vietnamChart.totalCasesPer1M"),
           ],
           datasets: [
             {
