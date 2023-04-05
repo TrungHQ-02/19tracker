@@ -21,6 +21,11 @@
             <router-link to="/about">About</router-link>
           </a-menu-item>
         </a-menu>
+        <a-button
+          style="position: absolute; top: 8px; right: 20px"
+          @click="changeLanguage"
+          >Đổi ngôn ngữ</a-button
+        >
       </a-layout-header>
       <a-layout-content class="bg-wrapper px-0 px-sm-4 px-md-5 py-5">
         <a-layout-content
@@ -38,6 +43,21 @@
     </a-layout>
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  methods: {
+    changeLanguage() {
+      if (this.$i18n.locale === "en") {
+        this.$i18n.locale = "vi";
+      } else {
+        this.$i18n.locale = "en";
+      }
+    },
+  },
+};
+</script>
 
 <style>
 #app {
@@ -67,11 +87,5 @@ nav a.router-link-exact-active {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-}
-
-@media (max-width: 768px) {
-  .bg-wrapper {
-    padding: 0;
-  }
 }
 </style>

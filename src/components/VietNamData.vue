@@ -1,8 +1,8 @@
 <template>
   <div style="padding-bottom: 20px">
-    <h1>VIET NAM DATA</h1>
+    <h1>{{ $t("vietnamData.vietnamData") }}</h1>
     <h3>
-      Last updated at:<br />
+      {{ $t("vietnamData.lastUpdatedAt") }}<br />
       {{ worldStatistics.statistic_taken_at }}
     </h3>
     <a-button
@@ -10,13 +10,13 @@
       style="margin-bottom: 15px"
       @click="handleClickDownloadExcel"
     >
-      Export Vietnam report
+      {{ $t("vietnamData.exportReport") }}
     </a-button>
     <a-row :gutter="20">
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total Cases"
+          :title="$t('vietnamData.totalCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -26,7 +26,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="New cases"
+          :title="$t('vietnamData.newCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -36,7 +36,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total deaths"
+          :title="$t('vietnamData.totalDeaths')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -47,7 +47,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="New deaths"
+          :title="$t('vietnamData.newDeaths')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -57,7 +57,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total recovered"
+          :title="$t('vietnamData.totalRecovered')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -67,7 +67,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Active cases"
+          :title="$t('vietnamData.activeCases')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -78,7 +78,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Serious critical"
+          :title="$t('vietnamData.seriousCritical')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -88,7 +88,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Total cases per one milion"
+          :title="$t('vietnamData.totalCasesPerMillion')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -98,7 +98,7 @@
       <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
-          title="Death per one milion"
+          :title="$t('vietnamData.deathsPerMillion')"
           :bordered="false"
           style="margin-bottom: 10px"
         >
@@ -151,11 +151,13 @@ export default {
     downloadExcel() {
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet("My Sheet");
+      const worksheet = workbook.addWorksheet(
+        this.$t("vietnamData.sheetExport.sheetTitle")
+      );
 
       worksheet.mergeCells("A1:I3");
       const titleCell = worksheet.getCell("A1");
-      titleCell.value = this.vietNamStatistics.country_name + " Report";
+      titleCell.value = this.$t("vietnamData.sheetExport.titleCell");
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       titleCell.font = {
         name: "Arial Black",
@@ -174,10 +176,10 @@ export default {
       worksheet.mergeCells("A4:I5");
       let timeStampCell = worksheet.getCell("A4");
       timeStampCell.value =
-        "This data was taken at " +
+        this.$t("vietnamData.sheetExport.script1") +
         this.worldStatistics.statistic_taken_at +
-        " and downloaded at " +
-        ` ${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        this.$t("vietnamData.sheetExport.script2") +
+        `${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
       timeStampCell.alignment = { vertical: "middle", horizontal: "center" };
       timeStampCell.font = {
         name: "Arial",
@@ -187,7 +189,7 @@ export default {
 
       worksheet.mergeCells("A6:I9");
       let desCell = worksheet.getCell("A6");
-      desCell.value = `This data provides information on the COVID-19 situation in ${this.vietNamStatistics.country_name}, including the number of cases, deaths, and active cases. Additionally, the data also includes information on the number of people who have recovered and factors related to the virus's spread, such as the number of serious and new cases. The data also includes information on the number of tests conducted and the number of cases and deaths per million population. All of this information helps government officials and healthcare experts to get an overview of the COVID-19 situation in ${this.vietNamStatistics.country_name} and make appropriate decisions to control and prevent the spread of the virus.`;
+      desCell.value = this.$t("vietnamData.sheetExport.desCell");
       desCell.font = {
         name: "Times New Roman",
         family: 1,
@@ -206,15 +208,31 @@ export default {
           showColumnStripes: true,
         },
         columns: [
-          { name: "Active Cases" },
-          { name: "Deaths per 1M Population" },
-          { name: "New Cases" },
-          { name: "New Deaths" },
-          { name: "Serious Critical" },
-          { name: "Total Cases" },
-          { name: "Total Cases per 1M Population" },
-          { name: "Total Deaths" },
-          { name: "Total Recovered" },
+          { name: this.$t("vietnamData.sheetExport.tableColumns.activeCases") },
+          {
+            name: this.$t(
+              "vietnamData.sheetExport.tableColumns.totalDeathsPer1M"
+            ),
+          },
+          { name: this.$t("vietnamData.sheetExport.tableColumns.newCases") },
+          { name: this.$t("vietnamData.sheetExport.tableColumns.newDeaths") },
+          {
+            name: this.$t(
+              "vietnamData.sheetExport.tableColumns.seriousCritical"
+            ),
+          },
+          { name: this.$t("vietnamData.sheetExport.tableColumns.totalCases") },
+          {
+            name: this.$t(
+              "vietnamData.sheetExport.tableColumns.totalCasesPer1M"
+            ),
+          },
+          { name: this.$t("vietnamData.sheetExport.tableColumns.totalDeaths") },
+          {
+            name: this.$t(
+              "vietnamData.sheetExport.tableColumns.totalRecovered"
+            ),
+          },
         ],
         rows: [
           [
@@ -261,8 +279,7 @@ export default {
 
       worksheet.mergeCells("B12:H13");
       let chartCell = worksheet.getCell("B12");
-      chartCell.value =
-        "This graph shows the number of Covid-19 cases and deaths in Vietnam over time since the outbreak began to the present day.";
+      chartCell.value = this.$t("vietnamData.sheetExport.chartCell");
       chartCell.font = {
         name: "Times New Roman",
         family: 1,
