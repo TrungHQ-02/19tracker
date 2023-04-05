@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #f0f8ff; padding: 12px">
     <h2>Vietnam barplot</h2>
-    <canvas ref="vnchart" responsive="true"></canvas>
+    <canvas ref="chart" responsive="true"></canvas>
     <button @click="captureVietNamChart">Capture ảnh đưa vào state</button>
   </div>
 </template>
@@ -10,8 +10,10 @@
 import Chart from "chart.js";
 import { mapActions, mapGetters } from "vuex";
 import html2canvas from "html2canvas";
+import EventBus from "@/event-bus/event-bus";
 
 function convertToNumber(str) {
+  if (!str) return 0;
   if (str === "N/A") return -1;
   str = str.replace(/,/g, "");
   return parseInt(str);
@@ -20,6 +22,10 @@ function convertToNumber(str) {
 export default {
   mounted() {
     this.renderChart();
+
+    EventBus.$on("capture-vietnam-chart", () => {
+      this.captureVietNamChart();
+    });
   },
   computed: {
     ...mapGetters(["vietNamStatistics"]),
@@ -29,13 +35,12 @@ export default {
       handler() {
         this.renderChart();
       },
-      deep: true,
     },
   },
   methods: {
     ...mapActions(["updateVietnamChartImage"]),
     renderChart() {
-      const ctx = this.$refs.vnchart.getContext("2d");
+      const ctx = this.$refs.chart.getContext("2d");
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -111,12 +116,11 @@ export default {
     },
 
     captureVietNamChart() {
-      const chart = this.$refs.vnchart;
-      console.log("chart được cap");
+      const chart = this.$refs.chart;
+      console.log("chart được cap từ component VNC");
       html2canvas(chart).then((canvas) => {
         this.updateVietnamChartImage(canvas.toDataURL());
       });
-
       console.log("Da luu anh vao state");
     },
   },

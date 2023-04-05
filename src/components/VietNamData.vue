@@ -2,7 +2,11 @@
   <div style="padding-bottom: 20px">
     <h1>VIET NAM DATA</h1>
     <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
-    <a-button type="primary" style="margin-bottom: 15px" @click="downloadExcel">
+    <a-button
+      type="primary"
+      style="margin-bottom: 15px"
+      @click="handleClickDownloadExcel"
+    >
       Export VietNam data to excel
     </a-button>
     <a-row :gutter="20">
@@ -73,6 +77,7 @@ import "ant-design-vue/dist/antd.css";
 import { mapGetters, mapActions } from "vuex";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import EventBus from "@/event-bus/event-bus";
 
 function convertToNumber(str) {
   if (!str) return 0;
@@ -91,6 +96,21 @@ export default {
     ]),
   },
   methods: {
+    async handleClickDownloadExcel() {
+      EventBus.$emit("capture-vietnam-chart");
+      await this.waitForVietnamChartImage();
+      this.downloadExcel();
+    },
+    waitForVietnamChartImage() {
+      return new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+          if (this.vietnamChartImage) {
+            clearInterval(intervalId);
+            resolve();
+          }
+        }, 100);
+      });
+    },
     downloadExcel() {
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
