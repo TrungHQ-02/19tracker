@@ -105,8 +105,10 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import flags from "../assets/flag";
+import html2canvas from "html2canvas";
 
 function convertToNumber(str) {
+  if (!str) return 0;
   if (str === "N/A") return -1;
   str = str.replace(/,/g, "");
   return parseInt(str);
@@ -217,11 +219,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["countriesStatistics", "worldStatistics"]),
+    ...mapGetters([
+      "countriesStatistics",
+      "worldStatistics",
+      "countryChartImage",
+    ]),
   },
 
   methods: {
-    ...mapActions(["fetchCountriesStatistics"]),
+    ...mapActions(["updateCountryChartImage"]),
 
     getCountryIsoCode(country_name) {
       return flags[country_name].toLowerCase();
@@ -244,6 +250,7 @@ export default {
       this.modalTitle = record.country_name;
       this.renderChart();
     },
+
     handleOk(e) {
       this.$refs.myChart.chart.destroy();
       this.visible = false;
@@ -328,7 +335,29 @@ export default {
       });
     },
 
-    downloadExcel() {
+    waitForCountryChartImage() {
+      return new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+          if (this.countryChartImage) {
+            clearInterval(intervalId);
+            resolve();
+          }
+        }, 100);
+      });
+    },
+
+    async captureChart() {
+      const chart = this.$refs.myChart;
+      html2canvas(chart).then((canvas) => {
+        this.updateCountryChartImage(canvas.toDataURL());
+      });
+      await this.waitForCountryChartImage();
+    },
+
+    async downloadExcel() {
+      //capture
+      await this.captureChart();
+
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("My Sheet");
@@ -436,6 +465,23 @@ export default {
 
         column.width = maxLength + 2; // add some padding to the width
       }
+
+      worksheet.mergeCells("A12:I13");
+      let chartCell = worksheet.getCell("B12");
+      chartCell.value =
+        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+      chartCell.font = {
+        name: "Times New Roman",
+        family: 1,
+        size: 14,
+      };
+      chartCell.alignment = { vertical: "middle", horizontal: "center" };
+
+      const imageId = workbook.addImage({
+        base64: this.countryChartImage,
+        extension: "png",
+      });
+      worksheet.addImage(imageId, "B14:H26");
 
       // export file
       const timeStamp = this.worldStatistics.statistic_taken_at;

@@ -7,7 +7,7 @@
       style="margin-bottom: 15px"
       @click="handleClickDownloadExcel"
     >
-      Export VietNam data to excel
+      Export Vietnam data to excel
     </a-button>
     <a-row :gutter="20">
       <a-col :span="8">
