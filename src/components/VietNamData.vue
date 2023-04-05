@@ -1,70 +1,107 @@
 <template>
   <div style="padding-bottom: 20px">
     <h1>VIET NAM DATA</h1>
-    <h3>Last updated at: {{ worldStatistics.statistic_taken_at }}</h3>
+    <h3>
+      Last updated at:<br />
+      {{ worldStatistics.statistic_taken_at }}
+    </h3>
     <a-button
       type="primary"
       style="margin-bottom: 15px"
       @click="handleClickDownloadExcel"
     >
-      Export Vietnam data to excel
+      Export Vietnam report
     </a-button>
     <a-row :gutter="20">
-      <a-col :span="8">
-        <a-card size="small" title="Total Cases" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Total Cases"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.cases }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card size="small" title="New cases" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="New cases"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.new_cases }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card size="small" title="Total deaths" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Total deaths"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.deaths }}</p>
         </a-card>
       </a-col>
-    </a-row>
 
-    <br />
-
-    <a-row :gutter="20">
-      <a-col :span="8">
-        <a-card size="small" title="New deaths" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="New deaths"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.new_deaths }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card size="small" title="Total recovered" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Total recovered"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.total_recovered }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card size="small" title="Active cases" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Active cases"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.active_cases }}</p>
         </a-card>
       </a-col>
-    </a-row>
-    <br />
 
-    <a-row :gutter="20">
-      <a-col :span="8">
-        <a-card size="small" title="Serious critical" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Serious critical"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.serious_critical }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
+      <a-col :xs="24" :sm="12" :md="8">
         <a-card
           size="small"
           title="Total cases per one milion"
           :bordered="false"
+          style="margin-bottom: 10px"
         >
           <p>{{ vietNamStatistics.total_cases_per_1m_population }}</p>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card size="small" title="Death per one milion" :bordered="false">
+      <a-col :xs="24" :sm="12" :md="8">
+        <a-card
+          size="small"
+          title="Death per one milion"
+          :bordered="false"
+          style="margin-bottom: 10px"
+        >
           <p>{{ vietNamStatistics.deaths_per_1m_population }}</p>
         </a-card>
       </a-col>

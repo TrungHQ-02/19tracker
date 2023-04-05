@@ -22,10 +22,7 @@
           </a-menu-item>
         </a-menu>
       </a-layout-header>
-      <a-layout-content
-        class="bg-wrapper"
-        :style="{ padding: '0 50px', marginTop: '48px' }"
-      >
+      <a-layout-content class="bg-wrapper px-0 px-sm-4 px-md-5 py-5">
         <a-layout-content
           :style="{
             padding: '12px 24px',
@@ -70,5 +67,11 @@ nav a.router-link-exact-active {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+  .bg-wrapper {
+    padding: 0;
+  }
 }
 </style>
