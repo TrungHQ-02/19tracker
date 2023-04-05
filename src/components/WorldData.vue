@@ -225,7 +225,6 @@ export default {
       };
       chartCell.alignment = { vertical: "middle", horizontal: "center" };
 
-      console.log(this.worldChartImage);
       const imageId = workbook.addImage({
         base64: this.worldChartImage,
         extension: "png",

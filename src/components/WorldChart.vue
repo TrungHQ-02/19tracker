@@ -101,7 +101,6 @@ export default {
 
     captureChart() {
       const chart = this.$refs.chart;
-      console.log("chart được cap từ world");
       html2canvas(chart).then((canvas) => {
         this.updateWorldChartImage(canvas.toDataURL());
       });

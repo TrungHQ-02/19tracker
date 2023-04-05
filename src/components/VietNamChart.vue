@@ -2,7 +2,6 @@
   <div style="background-color: #f0f8ff; padding: 12px">
     <h2>Vietnam barplot</h2>
     <canvas ref="chart" responsive="true"></canvas>
-    <button @click="captureVietNamChart">Capture ảnh đưa vào state</button>
   </div>
 </template>
 
@@ -117,11 +116,9 @@ export default {
 
     captureVietNamChart() {
       const chart = this.$refs.chart;
-      console.log("chart được cap từ component VNC");
       html2canvas(chart).then((canvas) => {
         this.updateVietnamChartImage(canvas.toDataURL());
       });
-      console.log("Da luu anh vao state");
     },
   },
 };

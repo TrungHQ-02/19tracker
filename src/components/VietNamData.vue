@@ -225,7 +225,7 @@ export default {
       worksheet.mergeCells("B12:H13");
       let chartCell = worksheet.getCell("B12");
       chartCell.value =
-        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+        "This graph shows the number of Covid-19 cases and deaths in Vietnam over time since the outbreak began to the present day.";
       chartCell.font = {
         name: "Times New Roman",
         family: 1,
@@ -233,7 +233,6 @@ export default {
       };
       chartCell.alignment = { vertical: "middle", horizontal: "center" };
 
-      console.log(this.vietnamChartImage);
       const imageId = workbook.addImage({
         base64: this.vietnamChartImage,
         extension: "png",
