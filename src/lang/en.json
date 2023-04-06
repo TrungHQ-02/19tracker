@@ -1,4 +1,10 @@
 {
+   "lang": "en",
+   "navTitle": {
+      "home": "Global",
+      "vietnam": "Vietnam",
+      "about": "About me"
+   },
    "vietnamChart": 
       {
          "vietnamBarplot": "Vietnam Barplot",
@@ -74,7 +80,7 @@
          "deathsPerMillion": "Death per one million",
          "sheetExport": {
             "sheetTitle": "Vietnam",
-            "titleCell": "Vietnam report report",
+            "titleCell": "Vietnam report",
             "script1": "This data was taken at ",
             "script2": " and downloaded at ",
             "desCell": "This data provides information on the COVID-19 situation in Vietnam, including the number of cases, deaths, and active cases. Additionally, the data also includes information on the number of people who have recovered and factors related to the virus's spread, such as the number of serious and new cases. The data also includes information on the number of tests conducted and the number of cases and deaths per million population. All of this information helps government officials and healthcare experts to get an overview of the COVID-19 situation in Vietnam and make appropriate decisions to control and prevent the spread of the virus.",
@@ -90,6 +96,45 @@
                "totalCasesPer1M": "Total cases per 1M"
             },
             "chartCell": "This graph shows the number of Covid-19 cases and deaths in Vietnam over time since the outbreak began to the present day."
+         }
+       },
+       "countriesStats": {
+         "countriesTable": {
+            "title": "Countries Stats",
+            "searchPlaceHolder": "Search country name",
+            "searchButton": "Search",
+            "resetButton": "Reset",
+            "downloadExcelButton": "Download report",
+            "details": "Details",
+            "columnTitle": {
+               "name": "Name",
+               "cases": "Cases",
+               "deaths": "Deaths",
+               "recovered": "Recovered",
+               "newDeaths": "New Deaths",
+               "newCases": "New Cases",
+               "critical": "Critical",
+               "active": "Active",
+               "tests": "Total Tests",
+               "actions": "Actions"
+            }
+         },
+         "sheetExport": {
+            "script1": "This data was taken at ",
+            "script2": " and downloaded at ",
+            "desCell": "This table contains the following information related to COVID-19: Active Cases, Deaths per 1M Population, New Cases, New Deaths, Serious Critical cases, Total Cases, Total Cases per 1M Population, Total Deaths, and Total Recovered cases. The data in the table is updated regularly to provide accurate information on the situation of the pandemic. This information can be used to analyze trends and make informed decisions related to travel, social distancing, and other measures to prevent the spread of COVID-19. By understanding the data in this table, individuals and organizations can take necessary precautions to protect themselves and others from the virus.",
+            "tableColumns":{
+               "totalDeathsPer1M": "Total deaths per 1M",
+               "totalCases": "Total Cases",
+               "totalDeaths": "Total Deaths",
+               "totalRecovered": "Total Recovered",
+               "newCases": "New Cases",
+               "newDeaths": "New Deaths",
+               "seriousCritical": "Serious Critical",
+               "activeCases": "Active Cases",
+               "totalCasesPer1M": "Total cases per 1M"
+            },
+            "chartCell": "This graph shows the number of Covid-19 cases and deaths over time since the outbreak began to the present day."
          }
        }
        

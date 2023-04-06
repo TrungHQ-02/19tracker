@@ -1,7 +1,10 @@
 <template>
-  <div style="background-color: aliceblue; margin-top: 12px">
+  <div
+    :key="$i18n.locale"
+    style="background-color: aliceblue; margin-top: 12px"
+  >
     <h2 style="font-size: 25px; margin-bottom: 0; padding: 6px 6px">
-      Countries Stats
+      {{ $t("countriesStats.countriesTable.title") }}
     </h2>
     <a-table
       :data-source="countriesStatistics"
@@ -23,7 +26,7 @@
       >
         <a-input
           v-ant-ref="(c) => (searchInput = c)"
-          :placeholder="`Search ${column.dataIndex}`"
+          :placeholder="$t('countriesStats.countriesTable.searchPlaceHolder')"
           :value="selectedKeys[0]"
           style="width: 188px; margin-bottom: 8px; display: block"
           @change="
@@ -40,14 +43,14 @@
           style="width: 90px; margin-right: 8px"
           @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
         >
-          Search
+          {{ $t("countriesStats.countriesTable.searchButton") }}
         </a-button>
         <a-button
           size="small"
           style="width: 90px"
           @click="() => handleReset(clearFilters)"
         >
-          Reset
+          {{ $t("countriesStats.countriesTable.resetButton") }}
         </a-button>
       </div>
       <a-icon
@@ -82,7 +85,9 @@
       </template>
 
       <span slot="action" slot-scope="text, record">
-        <a-button type="primary" @click="showModal(record)"> Details </a-button>
+        <a-button type="primary" @click="showModal(record)">
+          {{ $t("countriesStats.countriesTable.details") }}
+        </a-button>
         <a-modal
           v-model="visible"
           :title="modalTitle"
@@ -90,9 +95,9 @@
           :footer="null"
         >
           <canvas ref="myChart"></canvas>
-          <a-button type="primary" @click="downloadExcel"
-            >Download Excel</a-button
-          >
+          <a-button type="primary" @click="downloadExcel">{{
+            $t("countriesStats.countriesTable.downloadExcelButton")
+          }}</a-button>
         </a-modal>
       </span>
     </a-table>
@@ -130,11 +135,22 @@ export default {
       searchText: "",
       searchInput: null,
       searchedColumn: "",
-      columns: [
+    };
+  },
+
+  computed: {
+    ...mapGetters([
+      "countriesStatistics",
+      "worldStatistics",
+      "countryChartImage",
+    ]),
+    columns: function () {
+      let cols = [
         {
-          title: "Name",
+          title: this.$t("countriesStats.countriesTable.columnTitle.name"),
           dataIndex: "country_name",
           key: "country_name",
+          width: 100,
           scopedSlots: {
             filterDropdown: "filterDropdown",
             filterIcon: "filterIcon",
@@ -155,75 +171,77 @@ export default {
           ellipsis: true,
         },
         {
-          title: "Cases",
+          title: this.$t("countriesStats.countriesTable.columnTitle.cases"),
           dataIndex: "cases",
+          width: 110,
           sorter: (a, b) => compare(a.cases, b.cases),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Deaths",
+          title: this.$t("countriesStats.countriesTable.columnTitle.deaths"),
           dataIndex: "deaths",
           key: "deaths",
+          width: 100,
           sorter: (a, b) => compare(a.deaths, b.deaths),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Recovered",
+          title: this.$t("countriesStats.countriesTable.columnTitle.recovered"),
           dataIndex: "total_recovered",
           key: "total_recovered",
+          width: 120,
           sorter: (a, b) => compare(a.total_recovered, b.total_recovered),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "New deaths",
+          title: this.$t("countriesStats.countriesTable.columnTitle.newDeaths"),
           dataIndex: "new_deaths",
           key: "new_deaths",
+          width: 100,
           sorter: (a, b) => compare(a.new_deaths, b.new_deaths),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "New cases",
+          title: this.$t("countriesStats.countriesTable.columnTitle.newCases"),
           dataIndex: "new_cases",
           key: "new_cases",
+          width: 100,
           sorter: (a, b) => compare(a.new_cases, b.new_cases),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Critical",
+          title: this.$t("countriesStats.countriesTable.columnTitle.critical"),
           dataIndex: "serious_critical",
           key: "serious_critical",
+          width: 100,
           sorter: (a, b) => compare(a.serious_critical, b.serious_critical),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Active",
+          title: this.$t("countriesStats.countriesTable.columnTitle.active"),
           dataIndex: "active_cases",
           key: "active_cases",
+          width: 100,
           sorter: (a, b) => compare(a.active_cases, b.active_cases),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Tests",
+          title: this.$t("countriesStats.countriesTable.columnTitle.tests"),
           dataIndex: "total_tests",
           key: "total_tests",
+          width: 100,
           sorter: (a, b) => compare(a.total_tests, b.total_tests),
           sortDirections: ["descend", "ascend"],
         },
         {
-          title: "Actions",
+          title: this.$t("countriesStats.countriesTable.columnTitle.actions"),
           key: "action",
+          width: 100,
           scopedSlots: { customRender: "action" },
         },
-      ],
-    };
-  },
-
-  computed: {
-    ...mapGetters([
-      "countriesStatistics",
-      "worldStatistics",
-      "countryChartImage",
-    ]),
+      ];
+      return cols;
+    },
   },
 
   methods: {
@@ -360,14 +378,16 @@ export default {
 
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet("My Sheet");
+      const worksheet = workbook.addWorksheet(
+        this.modalRecord.country_name + " sheet"
+      );
 
       worksheet.mergeCells("A1:I3");
       const titleCell = worksheet.getCell("A1");
-      titleCell.value = this.modalRecord.country_name + " Report";
+      titleCell.value = this.modalRecord.country_name;
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       titleCell.font = {
-        name: "Arial Black",
+        name: "Open Sans",
         family: 2,
         size: 38,
       };
@@ -383,9 +403,9 @@ export default {
       worksheet.mergeCells("A4:I5");
       let timeStampCell = worksheet.getCell("A4");
       timeStampCell.value =
-        "This data was taken at " +
+        this.$t("countriesStats.sheetExport.script1") +
         this.worldStatistics.statistic_taken_at +
-        " and downloaded at " +
+        this.$t("countriesStats.sheetExport.script2") +
         ` ${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
       timeStampCell.alignment = { vertical: "middle", horizontal: "center" };
       timeStampCell.font = {
@@ -396,7 +416,7 @@ export default {
 
       worksheet.mergeCells("A6:I9");
       let desCell = worksheet.getCell("A6");
-      desCell.value = `This data provides information on the COVID-19 situation in ${this.modalRecord.country_name}, including the number of cases, deaths, and active cases. Additionally, the data also includes information on the number of people who have recovered and factors related to the virus's spread, such as the number of serious and new cases. The data also includes information on the number of tests conducted and the number of cases and deaths per million population. All of this information helps government officials and healthcare experts to get an overview of the COVID-19 situation in ${this.modalRecord.country_name} and make appropriate decisions to control and prevent the spread of the virus.`;
+      desCell.value = this.$t("countriesStats.sheetExport.desCell");
       desCell.font = {
         name: "Times New Roman",
         family: 1,
@@ -415,15 +435,43 @@ export default {
           showColumnStripes: true,
         },
         columns: [
-          { name: "Active Cases" },
-          { name: "Deaths per 1M Population" },
-          { name: "New Cases" },
-          { name: "New Deaths" },
-          { name: "Serious Critical" },
-          { name: "Total Cases" },
-          { name: "Total Cases per 1M Population" },
-          { name: "Total Deaths" },
-          { name: "Total Recovered" },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.activeCases"
+            ),
+          },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.totalDeathsPer1M"
+            ),
+          },
+          { name: this.$t("countriesStats.sheetExport.tableColumns.newCases") },
+          {
+            name: this.$t("countriesStats.sheetExport.tableColumns.newDeaths"),
+          },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.seriousCritical"
+            ),
+          },
+          {
+            name: this.$t("countriesStats.sheetExport.tableColumns.totalCases"),
+          },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.totalCasesPer1M"
+            ),
+          },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.totalDeaths"
+            ),
+          },
+          {
+            name: this.$t(
+              "countriesStats.sheetExport.tableColumns.totalRecovered"
+            ),
+          },
         ],
         rows: [
           [
@@ -468,8 +516,7 @@ export default {
 
       worksheet.mergeCells("A12:I13");
       let chartCell = worksheet.getCell("B12");
-      chartCell.value =
-        "This graph shows the number of Covid-19 cases and deaths worldwide over time since the outbreak began to the present day.";
+      chartCell.value = this.$t("countriesStats.sheetExport.chartCell");
       chartCell.font = {
         name: "Times New Roman",
         family: 1,
@@ -500,6 +547,12 @@ export default {
         this.renderChart();
       },
       deep: true,
+    },
+
+    lang: {
+      handleChangeLang() {
+        this.$forceUpdate();
+      },
     },
   },
 };

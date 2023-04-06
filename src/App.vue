@@ -12,13 +12,15 @@
           :style="{ lineHeight: '48px' }"
         >
           <a-menu-item key="1">
-            <router-link to="/">World data</router-link>
+            <router-link to="/">{{ $t("navTitle.home") }}</router-link>
           </a-menu-item>
           <a-menu-item key="2">
-            <router-link to="/vietnam">Vietnam</router-link>
+            <router-link to="/vietnam">{{
+              $t("navTitle.vietnam")
+            }}</router-link>
           </a-menu-item>
           <a-menu-item key="3">
-            <router-link to="/about">About</router-link>
+            <router-link to="/about">{{ $t("navTitle.about") }}</router-link>
           </a-menu-item>
         </a-menu>
         <a-button
