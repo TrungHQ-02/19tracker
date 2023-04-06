@@ -157,7 +157,7 @@ export default {
       titleCell.value = this.$t("worldData.sheetExport.titleCell");
       titleCell.alignment = { vertical: "middle", horizontal: "center" };
       titleCell.font = {
-        name: "Arial Black",
+        name: "Open Sans",
         family: 2,
         size: 38,
       };
@@ -300,7 +300,7 @@ export default {
 
 <style scoped>
 h1 {
-  font-family: "Dancing Script", cursive;
+  font-family: "Anton", sans-serif;
   font-size: 40px;
 }
 </style>
