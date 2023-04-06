@@ -23,11 +23,39 @@
             <router-link to="/about">{{ $t("navTitle.about") }}</router-link>
           </a-menu-item>
         </a-menu>
-        <a-button
-          style="position: absolute; top: 8px; right: 20px"
-          @click="changeLanguage"
-          >Đổi ngôn ngữ</a-button
-        >
+
+        <div class="logo" style="position: absolute; top: -8px; left: 14px">
+          <img
+            src="https://rastarecords.com/wp-content/uploads/2018/11/mainheadlogo.png"
+            style="width: 30px"
+            alt=""
+          />
+        </div>
+
+        <a-dropdown style="position: absolute; top: -10px; right: 14px">
+          <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+            <div>
+              <img
+                style="width: 45px"
+                v-if="currentLanguage === 'en'"
+                src="../public/usa-flag.png"
+              />
+              <img
+                style="width: 45px"
+                v-else="currentLanguage === 'vi'"
+                src="../public/vietnam-flag.png"
+              />
+            </div>
+          </a>
+          <a-menu slot="overlay" @click="onClick">
+            <a-menu-item key="1">
+              <img style="width: 45px" src="../public/usa-flag.png" />
+            </a-menu-item>
+            <a-menu-item key="2">
+              <img style="width: 45px" src="../public/vietnam-flag.png" />
+            </a-menu-item>
+          </a-menu>
+        </a-dropdown>
       </a-layout-header>
       <a-layout-content class="bg-wrapper px-0 px-sm-4 px-md-5 py-5">
         <a-layout-content
@@ -49,7 +77,19 @@
 <script>
 export default {
   name: "App",
+  computed: {
+    currentLanguage() {
+      return this.$i18n.locale;
+    },
+  },
   methods: {
+    onClick({ key }) {
+      if (this.currentLanguage === "en" && key === "2") {
+        this.changeLanguage();
+      } else if (this.currentLanguage === "vi" && key === "1") {
+        this.changeLanguage();
+      }
+    },
     changeLanguage() {
       if (this.$i18n.locale === "en") {
         this.$i18n.locale = "vi";
