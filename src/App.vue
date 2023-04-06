@@ -35,7 +35,7 @@
         </div>
 
         <a-dropdown
-          class="px-xs-1 px-sm-3 px-md-5 px-lg-5"
+          class="me-xs-1 me-sm-3 me-md-5 me-lg-5"
           style="position: absolute; top: -10px; right: 30px"
         >
           <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
