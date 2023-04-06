@@ -4,7 +4,6 @@
       <a-layout-header
         :style="{ position: 'fixed', zIndex: 1, width: '100%', height: '48px' }"
       >
-        <div class="logo" />
         <a-menu
           theme="dark"
           mode="horizontal"
@@ -24,7 +23,10 @@
           </a-menu-item>
         </a-menu>
 
-        <div class="logo" style="position: absolute; top: -8px; left: 14px">
+        <div
+          class="logo px-xs-0 px-sm-3 px-md-5 px-lg-5 px-xl-6"
+          style="position: absolute; top: -8px; left: 30px"
+        >
           <img
             src="https://rastarecords.com/wp-content/uploads/2018/11/mainheadlogo.png"
             style="width: 30px"
@@ -32,7 +34,10 @@
           />
         </div>
 
-        <a-dropdown style="position: absolute; top: -10px; right: 14px">
+        <a-dropdown
+          class="px-xs-1 px-sm-3 px-md-5 px-lg-5"
+          style="position: absolute; top: -10px; right: 30px"
+        >
           <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
             <div>
               <img
@@ -103,7 +108,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

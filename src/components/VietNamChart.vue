@@ -30,9 +30,17 @@ export default {
   },
   computed: {
     ...mapGetters(["vietNamStatistics"]),
+    lang() {
+      return this.$i18n.locale;
+    },
   },
   watch: {
     vietNamStatistics: {
+      handler() {
+        this.renderChart();
+      },
+    },
+    lang: {
       handler() {
         this.renderChart();
       },

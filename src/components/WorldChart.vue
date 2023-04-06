@@ -29,10 +29,19 @@ export default {
   },
   computed: {
     ...mapGetters(["worldStatistics", "worldChartImage"]),
+    lang() {
+      return this.$i18n.locale;
+    },
   },
   watch: {
     worldStatistics: {
-      async handler() {
+      handler() {
+        this.renderChart();
+      },
+    },
+
+    lang: {
+      handler() {
         this.renderChart();
       },
     },
