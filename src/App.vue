@@ -18,7 +18,7 @@
               $t("navTitle.vietnam")
             }}</router-link>
           </a-menu-item>
-          <a-menu-item style="z-index: 2" key="3">
+          <a-menu-item key="3">
             <router-link to="/about">{{ $t("navTitle.about") }}</router-link>
           </a-menu-item>
         </a-menu>
@@ -36,7 +36,7 @@
 
         <a-dropdown
           class="me-xs-1 me-sm-4 me-md-5 me-lg-5"
-          style="position: absolute; top: -10px; z-index: 0.5; right: 10px"
+          style="position: absolute; top: -10px; right: 10px"
         >
           <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
             <div>
