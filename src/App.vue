@@ -18,14 +18,14 @@
               $t("navTitle.vietnam")
             }}</router-link>
           </a-menu-item>
-          <a-menu-item key="3">
+          <a-menu-item style="z-index: 2" key="3">
             <router-link to="/about">{{ $t("navTitle.about") }}</router-link>
           </a-menu-item>
         </a-menu>
 
         <div
           class="logo px-xs-0 px-sm-3 px-md-5 px-lg-5 px-xl-6"
-          style="position: absolute; top: -8px; left: 30px"
+          style="position: absolute; top: -8px; left: 20px"
         >
           <img
             src="https://rastarecords.com/wp-content/uploads/2018/11/mainheadlogo.png"
@@ -35,8 +35,8 @@
         </div>
 
         <a-dropdown
-          class="me-xs-1 me-sm-3 me-md-5 me-lg-5"
-          style="position: absolute; top: -10px; right: 30px"
+          class="me-xs-1 me-sm-4 me-md-5 me-lg-5"
+          style="position: absolute; top: -10px; z-index: 0.5; right: 10px"
         >
           <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
             <div>
