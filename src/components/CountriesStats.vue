@@ -93,6 +93,8 @@
           :title="modalTitle"
           @ok="handleOk"
           :footer="null"
+          :maskClosable="true"
+          :maskStyle="{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }"
         >
           <canvas ref="myChart"></canvas>
           <a-button type="primary" @click="downloadExcel">{{
